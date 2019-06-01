@@ -34,6 +34,8 @@ function borrarElemento(e){
 }
 
 
+/*
+
 //Eventos Default: son comportamientos con los que ya vienen algunos nodos en determinados eventos
 let a = document.querySelector("a")
 
@@ -43,4 +45,68 @@ function clickDelA(e){
     //Event.preventDefault(): detiene el comportamiento por default de cualquier nodo
     e.preventDefault()
     console.log("click del a!")
+}
+*/
+
+
+/*
+1) En el callback del <a> hacer la siguiente estructura:
+
+<div>
+    <p>Esta seguro que quiere salir de esta pagina?</p>
+    <button>Aceptar</button>
+    <button>Cancelar</button>
+</div>
+
+2) Si se hace click en "aceptar" se tiene que redirigir al usuario al href del <a>
+
+3) Si se hace click en "cancelar" se tiene que borrar todo el div que contenia el boton
+
+ */
+
+let a = document.querySelector("a")
+
+a.addEventListener("click", clickDelA)
+
+function clickDelA(e){
+    let div = document.createElement("div")
+    let p = document.createElement("p")
+    let btn_aceptar = document.createElement("button")
+    let btn_cancelar = document.createElement("button")
+
+    //div.className= "popup"
+    div.classList.add("popup")
+    //nodo.classList.add
+    //nodo.classList.remove()
+    //nodo.classList.toggle()
+
+
+
+    p.innerText = "Esta seguro que quiere salir de esta pagina?"
+    btn_aceptar.innerText = "aceptar"
+    btn_aceptar.addEventListener("click", redirigir)
+
+    function redirigir(){
+        //window.location.href = "http://www.google.com"
+        location.href = a.href
+    }
+   
+    btn_cancelar.innerText = "cancelar"
+
+    btn_cancelar.addEventListener("click", borrarElDiv)
+
+    function borrarElDiv(e){
+        document.body.removeChild(e.target.parentNode)
+
+    }
+
+
+
+    div.appendChild(p)
+    div.appendChild(btn_aceptar)
+    div.appendChild(btn_cancelar)
+    document.body.appendChild(div)
+
+    e.preventDefault()
+
 }
